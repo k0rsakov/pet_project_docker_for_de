@@ -2,6 +2,7 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.empty import EmptyOperator
 from airflow.providers.docker.operators.docker import DockerOperator
+import datetime
 
 # Конфигурация DAG
 OWNER = "i.korsakov"
@@ -17,10 +18,10 @@ SHORT_DESCRIPTION = "SHORT DESCRIPTION"
 
 args = {
     "owner": OWNER,
-    "start_date": pendulum.datetime(2023, 1, 1, tz="Europe/Moscow"),
+    "start_date": datetime.datetime(year=2025, month=10, day=20, tzinfo=datetime.timezone.utc),
     "catchup": True,
     "retries": 3,
-    "retry_delay": pendulum.duration(seconds=1),
+    "retry_delay": datetime.timedelta(hours=1),
 }
 
 with DAG(
@@ -43,10 +44,10 @@ with DAG(
         task_id="run_container_via_bash",
         bash_command="""
         docker run \
-          -e DB_HOST=prod-server-bash \
-          -e DB_NAME=analytics_bash \
-          -e DB_PORT=5432 \
-          -e DB_USER=airflow_bash_user \
+          -e DB_HOST=BashOperator-prod-server-bash \
+          -e DB_NAME=BashOperator-analytics_bash \
+          -e DB_PORT=BashOperator-5432 \
+          -e DB_USER=BashOperator-airflow_bash_user \
           simple_container_with_env
         """,
     )
@@ -59,10 +60,10 @@ with DAG(
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         environment={
-            "DB_HOST": "prod-server-docker-op",
-            "DB_NAME": "analytics_docker_op",
-            "DB_PORT": "5432",
-            "DB_USER": "airflow_docker_user",
+            "DB_HOST": "DockerOperator-prod-server-docker-op",
+            "DB_NAME": "DockerOperator-analytics_docker_op",
+            "DB_PORT": "DockerOperator-5432",
+            "DB_USER": "DockerOperator-airflow_docker_user",
         },
     )
 
