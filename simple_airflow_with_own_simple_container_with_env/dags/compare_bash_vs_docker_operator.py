@@ -8,7 +8,6 @@ OWNER = "i.korsakov"
 DAG_ID = "compare_bash_vs_docker_operator"
 
 
-
 LONG_DESCRIPTION = """
 # LONG DESCRIPTION
 
@@ -41,7 +40,7 @@ with DAG(
     )
 
     run_via_bash = BashOperator(
-        task_id='run_container_via_bash',
+        task_id="run_container_via_bash",
         bash_command="""
         docker run \
           -e DB_HOST=prod-server-bash \
@@ -49,22 +48,22 @@ with DAG(
           -e DB_PORT=5432 \
           -e DB_USER=airflow_bash_user \
           simple_container_with_env
-        """
+        """,
     )
 
     # Способ 2: Запуск через DockerOperator (нативно)
     run_via_docker_operator = DockerOperator(
-        task_id='run_container_via_docker_operator',
-        image='simple_container_with_env',
+        task_id="run_container_via_docker_operator",
+        image="simple_container_with_env",
         auto_remove=True,
-        docker_url='unix://var/run/docker.sock',
-        network_mode='bridge',
+        docker_url="unix://var/run/docker.sock",
+        network_mode="bridge",
         environment={
-            'DB_HOST': 'prod-server-docker-op',
-            'DB_NAME': 'analytics_docker_op',
-            'DB_PORT': '5432',
-            'DB_USER': 'airflow_docker_user'
-        }
+            "DB_HOST": "prod-server-docker-op",
+            "DB_NAME": "analytics_docker_op",
+            "DB_PORT": "5432",
+            "DB_USER": "airflow_docker_user",
+        },
     )
 
     end = EmptyOperator(
