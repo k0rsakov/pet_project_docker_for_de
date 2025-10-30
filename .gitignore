@@ -205,3 +205,6 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Project
+simple_airflow_with_own_simple_container_with_env/logs
