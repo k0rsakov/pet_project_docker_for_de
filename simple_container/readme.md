@@ -9,5 +9,5 @@ docker build -t simple_container .
 ## Запуск контейнера
 
 ```bash
-docker run simple_container
+docker run --rm simple_container
 ```

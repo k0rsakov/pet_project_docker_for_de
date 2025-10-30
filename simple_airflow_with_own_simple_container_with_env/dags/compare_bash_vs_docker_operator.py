@@ -18,7 +18,9 @@ SHORT_DESCRIPTION = "SHORT DESCRIPTION"
 
 args = {
     "owner": OWNER,
-    "start_date": datetime.datetime(year=2025, month=10, day=20, tzinfo=datetime.timezone.utc),
+    "start_date": datetime.datetime(
+        year=2025, month=10, day=20, tzinfo=datetime.timezone.utc
+    ),
     "catchup": True,
     "retries": 3,
     "retry_delay": datetime.timedelta(hours=1),
@@ -43,7 +45,7 @@ with DAG(
     run_via_bash = BashOperator(
         task_id="run_container_via_bash",
         bash_command="""
-        docker run --rm \
+        docker run --rm --rm \
           -e DB_HOST=BashOperator-prod-server-bash-{{ data_interval_start.format('YYYY-MM-DD') }} \
           -e DB_NAME=BashOperator-analytics_bash \
           -e DB_PORT=BashOperator-5432 \
