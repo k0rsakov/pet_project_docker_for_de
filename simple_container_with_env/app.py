@@ -1,11 +1,12 @@
 import os
 
+
 def main():
     # Получаем переменные окружения
-    db_host = os.getenv('DB_HOST', 'localhost')
-    db_name = os.getenv('DB_NAME', 'default_db')
-    db_port = os.getenv('DB_PORT', '5432')
-    db_user = os.getenv('DB_USER', 'admin')
+    db_host = os.getenv("DB_HOST", "localhost")
+    db_name = os.getenv("DB_NAME", "default_db")
+    db_port = os.getenv("DB_PORT", "5432")
+    db_user = os.getenv("DB_USER", "admin")
 
     print("=" * 60)
     print("🗄️  DATABASE CONNECTION CONFIG")
@@ -17,6 +18,7 @@ def main():
     print("=" * 60)
     print("✅ Конфигурация загружена успешно!")
     print("=" * 60)
+
 
 if __name__ == "__main__":
     main()
