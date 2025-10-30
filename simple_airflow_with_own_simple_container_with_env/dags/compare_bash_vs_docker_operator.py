@@ -43,8 +43,8 @@ with DAG(
     run_via_bash = BashOperator(
         task_id="run_container_via_bash",
         bash_command="""
-        docker run \
-          -e DB_HOST=BashOperator-prod-server-bash \
+        docker run --rm \
+          -e DB_HOST=BashOperator-prod-server-bash-{{ data_interval_start.format('YYYY-MM-DD') }} \
           -e DB_NAME=BashOperator-analytics_bash \
           -e DB_PORT=BashOperator-5432 \
           -e DB_USER=BashOperator-airflow_bash_user \
@@ -57,10 +57,8 @@ with DAG(
         task_id="run_container_via_docker_operator",
         image="simple_container_with_env",
         auto_remove=True,
-        docker_url="unix://var/run/docker.sock",
-        network_mode="bridge",
         environment={
-            "DB_HOST": "DockerOperator-prod-server-docker-op",
+            "DB_HOST": "DockerOperator-prod-server-docker-op-{{ data_interval_start.format('YYYY-MM-DD') }}",
             "DB_NAME": "DockerOperator-analytics_docker_op",
             "DB_PORT": "DockerOperator-5432",
             "DB_USER": "DockerOperator-airflow_docker_user",
